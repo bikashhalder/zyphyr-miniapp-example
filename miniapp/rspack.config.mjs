@@ -38,7 +38,7 @@ export default env => {
     module: {
       rules: [
         ...Repack.getJsTransformRules(),
-        ...Repack.getAssetTransformRules({inline: true}),
+        ...Repack.getAssetTransformRules({inline: false}),
       ],
     },
     plugins: [
