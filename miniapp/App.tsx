@@ -6,7 +6,13 @@
  */
 
 import React, {useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, useColorScheme} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  useColorScheme,
+  View,
+} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
@@ -19,7 +25,7 @@ function App(): React.JSX.Element {
   };
 
   return (
-    <>
+    <View>
       <Text>This is mini app</Text>
       <TouchableOpacity style={styles.button} onPress={handlePress}>
         <Text
@@ -32,7 +38,7 @@ function App(): React.JSX.Element {
           MiniApp Buttons +{count}
         </Text>
       </TouchableOpacity>
-    </>
+    </View>
   );
 }
 

@@ -18,7 +18,13 @@ const STANDALONE = Boolean(process.env.STANDALONE);
  */
 
 export default env => {
-  const {mode, platform = process.env.PLATFORM} = env;
+  const {
+    mode,
+    platform = process.env.PLATFORM,
+    bundleFilename = undefined,
+    sourceMapFilename = undefined,
+    assetsPath = undefined,
+  } = env;
   const config = {
     mode,
     context: __dirname,
@@ -38,7 +44,13 @@ export default env => {
     plugins: [
       new Repack.RepackPlugin({
         platform,
+        output: {
+          bundleFilename,
+          sourceMapFilename,
+          assetsPath,
+        },
       }),
+
       new Repack.plugins.ModuleFederationPluginV2({
         name: 'miniapp',
         filename: 'miniapp.container.js.bundle',
