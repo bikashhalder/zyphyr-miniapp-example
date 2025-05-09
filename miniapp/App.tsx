@@ -5,17 +5,10 @@
  * @format
  */
 
-import React, { useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  useColorScheme,
-} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity, useColorScheme} from 'react-native';
 
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -26,20 +19,20 @@ function App(): React.JSX.Element {
   };
 
   return (
-    <TouchableOpacity
-      style={styles.button}
-      onPress={handlePress}
-    >
-      <Text
-        style={[
-          styles.buttonText,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        MiniApp Button +{count}
-      </Text>
-    </TouchableOpacity>
+    <>
+      <Text>This is mini app</Text>
+      <TouchableOpacity style={styles.button} onPress={handlePress}>
+        <Text
+          style={[
+            styles.buttonText,
+            {
+              color: isDarkMode ? Colors.white : Colors.black,
+            },
+          ]}>
+          MiniApp Buttons +{count}
+        </Text>
+      </TouchableOpacity>
+    </>
   );
 }
 

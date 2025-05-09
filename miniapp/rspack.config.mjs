@@ -1,10 +1,12 @@
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import * as Repack from '@callstack/repack';
+import {withZephyr} from 'zephyr-repack-plugin';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const USE_ZEPHYR = Boolean(process.env.ZC);
 
 const STANDALONE = Boolean(process.env.STANDALONE);
 
@@ -17,7 +19,7 @@ const STANDALONE = Boolean(process.env.STANDALONE);
 
 export default env => {
   const {mode, platform = process.env.PLATFORM} = env;
-  return {
+  const config = {
     mode,
     context: __dirname,
     entry: './index.js',
@@ -55,6 +57,12 @@ export default env => {
           },
         },
       }),
+      new Repack.plugins.HermesBytecodePlugin({
+        enabled: mode === 'production',
+        test: /\.(js)?bundle$/,
+        exclude: /index.bundle$/,
+      }),
     ],
   };
+  return withZephyr()(config);
 };

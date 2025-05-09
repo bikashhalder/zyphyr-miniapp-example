@@ -13,12 +13,16 @@
     "test": "jest",
     "pods": "(cd ios && bundle install && bundle exec pod install)",
     "pods:update": "(cd ios && bundle exec pod update)",
-    "adbreverse": "adb reverse tcp:9001 tcp:9001"
+    "adbreverse": "adb reverse tcp:9001 tcp:9001",
+    "bundle": "pnpm run bundle:ios && pnpm run bundle:android",
+    "bundle:ios": "react-native bundle --platform ios --dev false --entry-file index.js",
+    "bundle:android": "react-native bundle --platform android --dev false --entry-file index.js"
   },
   "dependencies": {
     "@module-federation/enhanced": "^0.13.1",
     "react": "19.0.0",
-    "react-native": "0.78.2"
+    "react-native": "0.78.2",
+    "zephyr-repack-plugin": "^0.0.39"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
