@@ -36,7 +36,9 @@ export default env => {
       ],
     },
     plugins: [
-      new Repack.RepackPlugin(),
+      new Repack.RepackPlugin({
+        platform,
+      }),
       new Repack.plugins.ModuleFederationPluginV2({
         name: 'miniapp',
         filename: 'miniapp.container.js.bundle',
