@@ -1,3 +1,4 @@
+// webpack.config.js
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import * as Repack from '@callstack/repack';
@@ -7,24 +8,17 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const USE_ZEPHYR = Boolean(process.env.ZC);
-
 const STANDALONE = Boolean(process.env.STANDALONE);
-
-/**
- * Rspack configuration enhanced with Re.Pack defaults for React Native.
- *
- * Learn about Rspack configuration: https://rspack.dev/config/
- * Learn about Re.Pack configuration: https://re-pack.dev/docs/guides/configuration
- */
 
 export default env => {
   const {
-    mode,
-    platform = process.env.PLATFORM,
-    bundleFilename = undefined,
-    sourceMapFilename = undefined,
-    assetsPath = undefined,
+    mode = 'production',
+    platform = 'ios', // or 'android'
+    bundleFilename = 'index.bundle',
+    sourceMapFilename = 'index.map',
+    assetsPath = path.resolve(__dirname, 'dist/assets'),
   } = env;
+
   const config = {
     mode,
     context: __dirname,
@@ -33,12 +27,14 @@ export default env => {
       ...Repack.getResolveOptions(),
     },
     output: {
+      path: path.resolve(__dirname, 'dist'),
       uniqueName: 'org-mini-app',
+      filename: '[name].js',
     },
     module: {
       rules: [
         ...Repack.getJsTransformRules(),
-        ...Repack.getAssetTransformRules({inline: false}),
+        ...Repack.getAssetTransformRules({inline: false}), // Emit physical assets
       ],
     },
     plugins: [
@@ -50,24 +46,19 @@ export default env => {
           assetsPath,
         },
       }),
-
       new Repack.plugins.ModuleFederationPluginV2({
         name: 'miniapp',
         filename: 'miniapp.container.js.bundle',
         dts: false,
         exposes: {
-          './App': './App.tsx',
+          './App': './src/App.tsx',
         },
         shared: {
-          react: {
-            singleton: true,
-            version: '19.0.0',
-            eager: STANDALONE,
-          },
+          react: {singleton: true, eager: STANDALONE, version: '18.2.0'},
           'react-native': {
             singleton: true,
-            version: '0.78.2',
             eager: STANDALONE,
+            version: '0.73.0',
           },
         },
       }),
@@ -78,5 +69,6 @@ export default env => {
       }),
     ],
   };
-  return withZephyr()(config);
+
+  return withZephyr()(config); // <-- Wrap AFTER all plugins
 };
