@@ -22,7 +22,7 @@
     "@module-federation/enhanced": "^0.13.1",
     "react": "19.0.0",
     "react-native": "0.78.2",
-    "zephyr-repack-plugin": "^0.0.39"
+    "zephyr-webpack-plugin": "^0.0.39"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
